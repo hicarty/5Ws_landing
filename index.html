@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5Ws of Fashion — The Fashionable Win-Win</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── TOKENS ─────────────────────────────────────────── */
+  :root {
+    --navy:   #210747;
+    --pink:   #811654;
+    --blush:  #f0d9e6;
+    --cream:  #f5f1e7;
+    --ivory:  #fdf9f5;
+    --charcoal: #1d1d1b;
+    --mid:    #7a7a7a;
+    --white:  #ffffff;
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Jost', sans-serif;
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ─── RESET & BASE ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── CURSOR ─────────────────────────────────────────── */
+  body { cursor: none; }
+  .cursor {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--pink);
+    transform: translate(-50%,-50%);
+    transition: transform 0.08s var(--ease-out), width 0.3s, height 0.3s, background 0.3s;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--pink);
+    transform: translate(-50%,-50%);
+    transition: transform 0.22s var(--ease-out), width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.6;
+  }
+  a:hover ~ .cursor, button:hover ~ .cursor { width: 20px; height: 20px; }
+
+  /* ─── NAV ────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    background: transparent;
+    transition: background 0.5s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(247,243,238,0.92);
+    backdrop-filter: blur(12px);
+    padding: 1rem 3rem;
+    border-bottom: 1px solid rgba(184,94,142,0.12);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: none;
+  }
+  .nav-logo span { color: var(--pink); }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-decoration: none;
+    cursor: none;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--pink);
+    transition: width 0.35s var(--ease-out);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--white); background: var(--navy);
+    padding: 0.65rem 1.5rem;
+    border: none; cursor: none;
+    transition: background 0.3s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--pink); }
+
+  /* ─── HERO ───────────────────────────────────────────── */
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--cream);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 6rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  /*.hero-left::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 340px; height: 340px; border-radius: 50%;
+    background: rgba(184,94,142,0.22);
+    pointer-events: none;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute; bottom: 120px; left: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: var(--cream);
+    pointer-events: none;
+  }*/
+
+  .hero-tag {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--pink); margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.9s 0.3s var(--ease-out) forwards;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--charcoal);
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.9s 0.5s var(--ease-out) forwards;
+  }
+  .hero-headline em {
+    font-style: italic; color: var(--pink);
+    display: block;
+  }
+
+  .hero-desc {
+    font-size: 0.88rem; color: var(--charcoal);
+    max-width: 360px; line-height: 1.8;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.9s 0.7s var(--ease-out) forwards;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem;
+    opacity: 0; animation: fadeUp 0.9s 0.9s var(--ease-out) forwards;
+  }
+  .btn-primary {
+    background: var(--pink); color: var(--white);
+    padding: 0.85rem 2.2rem;
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+    border: none; cursor: none;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: #a0427a; transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: var(--blush);
+    padding: 0.85rem 2.2rem;
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+    border: 1px solid var(--blush); cursor: none;
+    transition: border-color 0.3s, color 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--pink); color: var(--pink); }
+
+  .hero-scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 4rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    opacity: 0; animation: fadeUp 0.8s 1.3s var(--ease-out) forwards;
+  }
+  .scroll-line {
+    width: 36px; height: 1px; background: rgba(255,255,255,0.3);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%; background: var(--pink);
+    animation: scrollLine 1.8s 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0% { left: -100%; } 50% { left: 0; } 100% { left: 100%; }
+  }
+
+  /* Hero right — editorial photo collage */
+  .hero-right {
+    background: var(--pink);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+  .hero-photo {
+    overflow: hidden; position: relative;
+  }
+  .hero-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.8s var(--ease-out);
+  }
+  .hero-photo:hover img { transform: scale(1.04); }
+
+  /* Overlay tag on one of the hero photos */
+  .hero-photo-tag {
+    position: absolute; bottom: 1.2rem; left: 1.2rem;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    pointer-events: none;
+  }
+
+  /* Stat strip across hero-right */
+  .hero-stats-strip {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--pink);
+    display: flex; justify-content: space-around;
+    padding: 1rem 2rem;
+    z-index: 10;
+    opacity: 0; animation: fadeUp 0.8s 1.1s var(--ease-out) forwards;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 600; color: var(--white);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.8); margin-top: 0.2rem;
+  }
+
+  /* ─── TICKER ─────────────────────────────────────────── */
+  .ticker-wrap {
+    background: var(--navy); padding: 0.85rem 0;
+    overflow: hidden; border-top: 1px solid rgba(184,94,142,0.3);
+  }
+  .ticker {
+    display: flex; gap: 0;
+    animation: ticker 28s linear infinite;
+    width: max-content;
+  }
+  .ticker-item {
+    white-space: nowrap;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    padding: 0 3rem;
+  }
+  .ticker-item span { color: var(--pink); margin-right: 3rem; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ─── ABOUT / CRAFT VALUES ───────────────────────────── */
+  .section { padding: 7rem 3rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--charcoal); margin-bottom: 1rem;
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+  }
+  .about-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--navy); margin-bottom: 1.8rem;
+  }
+  .about-text h2 em { font-style: italic; color: var(--pink); }
+  .about-text p {
+    font-size: 0.9rem; color: #555; line-height: 1.9;
+    margin-bottom: 1.2rem;
+  }
+  .about-link {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--navy); text-decoration: none; cursor: none;
+    border-bottom: 1px solid var(--navy); padding-bottom: 1px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .about-link:hover { color: var(--pink); border-color: var(--pink); }
+
+  /* CRAFT pillars */
+  .craft-pillars {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .craft-pill {
+    padding: 1.8rem;
+    border: 1px solid rgba(33,7,71,0.1);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    background: var(--white);
+  }
+  .craft-pill::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--pink);
+    transform: scaleY(0); transform-origin: top;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .craft-pill:hover { border-color: var(--pink); transform: translateY(-4px); }
+  .craft-pill:hover::before { transform: scaleY(1); }
+  .craft-letter {
+    font-family: var(--font-display);
+    font-size: 2.4rem; font-weight: 600;
+    color: var(--navy); opacity: 0.12;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .craft-title {
+    font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--navy); margin-bottom: 0.4rem; font-weight: 500;
+  }
+  .craft-desc {
+    font-size: 0.8rem; color: #777; line-height: 1.6;
+  }
+
+  /* ─── WHAT WE DO (dark section) ──────────────────────── */
+  .dark-section {
+    background: var(--navy);
+    padding: 7rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .dark-section::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,94,142,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .dark-inner { max-width: 1200px; margin: 0 auto; }
+  .dark-section .section-label { color: var(--pink); }
+
+  .dark-section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300; color: var(--white);
+    margin-bottom: 4rem; max-width: 600px; line-height: 1.2;
+  }
+  .dark-section h2 em { font-style: italic; color: var(--pink); }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.04);
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: background 0.3s;
+    position: relative; overflow: hidden;
+    cursor: none;
+  }
+  .service-card:hover { background: rgba(184,94,142,0.12); }
+  .service-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem; font-weight: 300;
+    color: rgba(255,255,255,0.07); line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+  .service-title {
+    font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--blush); margin-bottom: 0.8rem; font-weight: 400;
+  }
+  .service-desc {
+    font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+  }
+
+  /* ─── EVENTS SECTION ─────────────────────────────────── */
+  .events-section { padding: 7rem 3rem; background: var(--cream); }
+  .events-inner { max-width: 1200px; margin: 0 auto; }
+
+  .events-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+  .events-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    font-weight: 300; color: var(--navy); line-height: 1.2;
+  }
+  .events-header h2 em { font-style: italic; color: var(--pink); }
+
+  .events-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5rem; }
+
+  .event-card {
+    background: var(--white);
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+    cursor: none;
+    position: relative;
+  }
+  .event-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(33,7,71,0.12); }
+  .event-card-img {
+    height: 220px; overflow: hidden;
+    background: linear-gradient(135deg, var(--blush) 0%, var(--cream) 100%);
+    position: relative;
+  }
+  .event-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Placeholder gradient images for cards without real photos */
+  .event-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .event-img-placeholder svg { opacity: 0.2; }
+
+  .event-card:first-child .event-card-img { height: 340px; }
+
+  .event-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--pink); color: var(--white);
+    font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+  }
+  .event-card-body { padding: 1.5rem; }
+  .event-date {
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid); margin-bottom: 0.5rem;
+  }
+  .event-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 400;
+    color: var(--navy); margin-bottom: 0.6rem; line-height: 1.25;
+  }
+  .event-card:first-child .event-title { font-size: 1.7rem; }
+  .event-desc {
+    font-size: 0.78rem; color: #777; line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+  .event-link {
+    font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--navy); text-decoration: none; cursor: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.3s;
+  }
+  .event-link::after { content: '→'; transition: transform 0.3s; }
+  .event-link:hover { color: var(--pink); }
+  .event-link:hover::after { transform: translateX(4px); }
+
+  /* ─── AUDIENCE / QUOTE STRIP ─────────────────────────── */
+  .quote-section {
+    padding: 6rem 3rem;
+    background: var(--pink);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .quote-section::before {
+    content: '\201C';
+    font-family: var(--font-display);
+    font-size: 20rem; font-weight: 600;
+    color: rgba(255,255,255,0.08);
+    position: absolute; top: -4rem; left: 2rem;
+    line-height: 1; pointer-events: none;
+  }
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300; font-style: italic;
+    color: var(--white); max-width: 860px;
+    margin: 0 auto 1.5rem; line-height: 1.3;
+  }
+  .quote-attr {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ─── AUDIENCE PERSONAS MARQUEE ──────────────────────── */
+  .personas-section { padding: 5rem 0; overflow: hidden; background: var(--ivory); }
+  .personas-label {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--pink); text-align: center; margin-bottom: 2.5rem; padding: 0 3rem;
+  }
+  .personas-track {
+    display: flex; gap: 1.5rem;
+    animation: personaScroll 22s linear infinite;
+    width: max-content;
+  }
+  .personas-track:hover { animation-play-state: paused; }
+  @keyframes personaScroll {
+    0% { transform: translateX(0); } 100% { transform: translateX(-50%); }
+  }
+  .persona-card {
+    width: 240px; flex-shrink: 0;
+    background: var(--white);
+    border: 1px solid rgba(33,7,71,0.08);
+    padding: 1.8rem 1.5rem;
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: none;
+  }
+  .persona-card:hover { transform: translateY(-4px); border-color: var(--pink); }
+  .persona-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--blush);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 1.2rem; font-weight: 600;
+    color: var(--navy); margin-bottom: 1rem;
+  }
+  .persona-name {
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--navy); margin-bottom: 0.4rem; font-weight: 500;
+  }
+  .persona-desc { font-size: 0.78rem; color: #777; line-height: 1.6; }
+  .persona-archetype {
+    margin-top: 1rem; font-size: 0.6rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--pink); font-weight: 400;
+  }
+
+  /* ─── PARTNER CTA ────────────────────────────────────── */
+  .cta-section {
+    padding: 8rem 3rem;
+    background: var(--navy);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-section::after {
+    content: '5Ws';
+    font-family: var(--font-display);
+    font-size: 22rem; font-weight: 600;
+    color: rgba(255,255,255,0.03);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none; white-space: nowrap;
+    letter-spacing: -0.05em;
+  }
+  .cta-label {
+    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--blush); margin-bottom: 1.5rem;
+  }
+  .cta-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300; color: var(--white);
+    line-height: 1.1; margin-bottom: 1.5rem;
+  }
+  .cta-h2 em { font-style: italic; color: var(--blush); }
+  .cta-desc {
+    font-size: 0.9rem; color: rgba(255,255,255,0.55);
+    max-width: 520px; margin: 0 auto 3rem; line-height: 1.8;
+  }
+  .cta-btns { display: flex; justify-content: center; gap: 1rem; }
+
+  /* ─── FOOTER ─────────────────────────────────────────── */
+  footer {
+    background: #110328;
+    padding: 4rem 3rem 2rem;
+    color: rgba(255,255,255,0.45);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.8rem;
+  }
+  .footer-brand-name span { color: var(--pink); }
+  .footer-tagline { font-size: 0.8rem; line-height: 1.7; max-width: 260px; }
+  .footer-col h4 {
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 1.2rem; font-weight: 400;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a {
+    font-size: 0.8rem; color: rgba(255,255,255,0.4);
+    text-decoration: none; cursor: none;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--pink); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 0.72rem; }
+  .footer-craft {
+    font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--pink);
+  }
+
+  /* ─── KEYFRAMES ──────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SCROLL REVEAL ──────────────────────────────────── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── GRAIN OVERLAY ──────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 9990;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAV ──────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">5<span>W</span>s of Fashion</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#audience">Audience</a></li>
+    <li><a href="#partner">Partner</a></li>
+  </ul>
+  <a href="#partner" class="nav-cta">Work with us</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <p class="hero-tag">Leicester · London · Beyond</p>
+    <h1 class="hero-headline">
+      The<br>Fashionable<br><em>Win–Win.</em>
+    </h1>
+    <p class="hero-desc">A leading fashion research &amp; events management agency advancing conscious, uniting consumers, practitioners and academics with the brands shaping the future of fashion.</p>
+    <div class="hero-btns">
+      <a href="#events" class="btn-primary">Explore Services</a>
+      <a href="#partner" class="btn-ghost">Partner With Us</a>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- Editorial photo grid — real imagery from 5Ws events represented as styled placeholders -->
+    <div class="hero-photo" style="grid-column:1; grid-row:1;">
+      <div style="width:100%;height:100%;background-image:url("https://drive.google.com/file/d/15xTl_vnM7HnIgeTHFT3E7DLW0BdpMrX9/preview");display:flex;align-items:center;justify-content:center;">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="20" r="12" stroke="#210747" stroke-width="1.5"/><path d="M10 55c0-11.046 8.954-20 20-20s20 8.954 20 20" stroke="#210747" stroke-width="1.5"/></svg>
+      </div>
+      <div class="hero-photo-tag">Case Studies</div>
+    </div>
+    <div class="hero-photo" style="grid-column:2; grid-row:1;">
+      <div style="width:100%;height:100%;background:linear-gradient(160deg,var(--cream) 0%, var(--cream) 100%);display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--blush);text-align:center;padding:1rem;font-style:italic;line-height:1.4;">"Research-led.<br>Principle-driven."</p>
+      </div>
+    </div>
+    <div class="hero-photo" style="grid-column:1; grid-row:2;">
+      <div style="width:100%;height:100%;background-image:url("https://drive.google.com/file/d/163c2ylUYZjrhkw1Y4t2b9693Z9Fanmyb/view?usp=sharing");display:flex;align-items:center;justify-content:center;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:3rem;color: var(--pink);font-weight:600;">Meet the team</p>
+      </div>
+    </div>
+    <div class="hero-photo" style="grid-column:2; grid-row:2;">
+      <div style="width:100%;height:100%;background:linear-gradient(160deg,var(--cream) 0%,var(--cream) 100%);display:flex;align-items:center;justify-content:center;">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="44" height="44" rx="2" stroke="#210747" stroke-width="1.5"/><path d="M8 22h44M22 22v30" stroke="#210747" stroke-width="1.5"/><circle cx="15" cy="15" r="3" fill="#b85e8e"/></svg>
+      </div>
+      <div class="hero-photo-tag">Events Agency</div>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="hero-stats-strip">
+      <div class="stat-item">
+        <div class="stat-num">42</div>
+        <div class="stat-label">Research papers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Events</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">DMU alumni</div>
+        <div class="stat-label">Academic background</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ────────────────────────────────────────────── -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item"><span>◆</span> Conscious Consumption Made Fashionable</span>
+    <span class="ticker-item"><span>◆</span> Collaboration · Responsibility · Access &amp; Equity · Future-thinking · Transparency</span>
+    <span class="ticker-item"><span>◆</span> London · Milan · Leicester · Paris</span>
+    <span class="ticker-item"><span>◆</span> The Fashionable Win-Win</span>
+    <span class="ticker-item"><span>◆</span> Conscious Consumption Made Fashionable</span>
+    <span class="ticker-item"><span>◆</span> Collaboration · Responsibility · Access &amp; Equity · Future-thinking · Transparency</span>
+    <span class="ticker-item"><span>◆</span> London · Milan · Leicester · Paris</span>
+    <span class="ticker-item"><span>◆</span> The Fashionable Win-Win</span>
+  </div>
+</div>
+
+<!-- ── MEET THE TEAM & SPECIALIST AREAS ─────────────────────────────────────── -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-label">Our Story</p>
+        <h2>Where <em>intelligence</em> and fashion meet.</h2>
+        <p>Founded by De Montfort University’s Fashion Management with Marketing alumni, 5Ws of Fashion is a research and events management agency rooted in the business of fashion, bridging the gap between academic insight and real-world practice.
+        </p><p>We don’t just host events - we create environments for immersive learning experiences, foundations for unpopular fashion perspectives to be expressed, genuine alignment with sustainable practice can be fostered, and where Leicester is championed as the British fashion hub where our story began.</p>
+        <a href="#blog" class="about-link">Read our full story</a>
+      </div>
+      <div class="reveal"></div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:3rem;color: var(--pink);font-weight:600;">Meet the team</p>
+      </div>
+      <div class="craft-pillars reveal">
+        <div class="craft-pill">
+          <div class="craft-letter">Adufe</div>
+          <div class="craft-title">Adufe Lagos</div>
+          <div class="craft-desc">Adufe is a Nigerian fashion designer and entrepreneur whose work explores the intersection of African creativity, cultural identity, and global fashion strategy. Born and raised in Lagos, Nigeria, one of Africa’s most influential fashion capitals, her perspective is shaped by the city’s vibrant style culture and its spirit of bold self-expression. In 2024, she relocated to the United Kingdom to pursue a Master’s degree in Fashion Management with Marketing at De Montfort University in Leicester, further developing her understanding of the business and strategic dynamics shaping the global fashion industry. She is currently based in Belfast.
+            Growing up with parents known for their expressive and maximalist approach to style, Adufe developed an early appreciation for fashion as a powerful form of identity and storytelling. Inspired by this environment and Lagos’ dynamic fashion scene, she founded her fashion brand Adufe Lagos in 2020 as a passion project celebrating confident aesthetics and contemporary interpretations of African style.
+            Through her entrepreneurial journey, Adufe has gained experience in creative direction, brand development, and fashion business operations while building her own label. Her work increasingly focuses on how emerging designers from culturally rich yet underrepresented fashion regions can successfully position themselves within international markets.
+            In 2025, she collaborated with a team in partnership with Lumbers on a project highlighting designers from globally underrepresented fashion regions, exploring the structural challenges many encounter when entering international fashion spaces. The exhibition brought together creative voices from diverse cultural backgrounds. This work complemented her postgraduate research examining how fashion brands from emerging markets, especially African markets can navigate global fashion systems while overcoming barriers to international growth.
+            Through her work, Adufe advocates for greater visibility, strategic support, and sustainable opportunities for designers from emerging fashion regions within the global fashion ecosystem.</div>
+        </div>
+        <div class="craft-pill">
+          <div class="craft-letter">Manali</div>
+          <div class="craft-title">Ruii Clothing</div>
+          <div class="craft-desc">Manali Kamble is a multidisciplinary fashion and brand professional whose work spans fashion design, visual branding, and creative direction. With over eight years of experience across the creative industries, her practice is shaped by a deep connection to nature and the cultural values rooted in her Indian upbringing. Growing up in an environment where respect for materials and mindful living were part of everyday life, sustainability naturally became an integral part of her creative outlook.
+            Her journey into design began at Bharati Vidyapeeth College of Fine Arts, where she was first introduced to art and visual expression. This foundation helped shape her design sensibilities and led her to pursue a Master’s degree in Fashion Design. Her work during this time explored narrative-driven collections and craftsmanship, eventually leading to the presentation of her collection at London Fashion Week – Fashion Scout, alongside features in several fashion editorials. Driven by a desire to create responsibly, Manali later founded Ruii Clothing, a sustainable childrenswear label in India that combined thoughtful production with contemporary aesthetics. In 2025, she completed a second Master’s degree in Luxury Fashion Brand Management at Nottingham Trent University, expanding her perspective on the strategic and cultural dimensions of the fashion industry. Alongside her design practice, she has gained experience across branding and marketing, contributing to creative projects with brands such as Cadbury at Contract Advertising, as well as Bougainvillea and Kelkar Foods & Fragrances. Today, Manali’s work brings together design, strategy, and storytelling, exploring how thoughtful creativity can shape meaningful and enduring brand experiences.</div>
+        </div>
+        <div class="craft-pill">
+          <div class="craft-letter">Mine</div>
+          <div class="craft-title">DMU Museum</div>
+          <div class="craft-desc">Mine Yeter is a Turkish designer raised in England, shaped by the richness of two cultures that inform both her creative and professional identity. Born in Gaziantep, a city renowned for its generational craftsmanship, she grew up surrounded by artisans whose skills in coppersmithing, leather shoemaking, and woodworking were passed down through family-run bazaars. This early exposure to heritage craft instilled in her a deep respect for making, materiality, and tradition. Raised within the structure and multicultural landscape of British society, Mine developed a balanced perspective that blends discipline with generosity, values rooted equally in her Turkish heritage and British upbringing. This duality now defines her design philosophy: honouring tradition while responding to contemporary cultural shifts. In 2025, she completed a Master of Arts in Fashion Management with Marketing, dedicating her research to the leather industry and examining Generation Z’s capacity to revive traditional craftsmanship within a technology-driven era. Her work critically explores the compatibility between heritage leathercraft and modern design thinking, with research soon to be published on young designers and the leathercraft sector. Mine currently contributes as a designer to the DMU Museum’s Artefacts Live exhibition project while working as a Junior Leather Goods Sample Maker in Rutland, Leicestershire, for one of the UK’s leading belt suppliers, producing for high-street and designer brands. Specialising in leather goods design and production, she bridges research and hands-on craft, ensuring heritage skills evolve through informed, contemporary execution. </div>
+        </div>
+        <div class="craft-pill">
+          <div class="craft-letter">Rumbie</div>
+          <div class="craft-title">14fashion Group</div>
+          <div class="craft-desc">Rumbie is a founder and fashion entrepreneur, born in Zimbabwe and raised in England. She is a published children’s author and researcher, holding a First-Class Law degree and a Master of Arts in Fashion Management with Marketing. She currently works in London as a Sales and Marketing Specialist with national clients across the food, sustainability, and energy sectors.
+            Her interest in fashion began in her teenage years. Although accepted into fashion design school, she chose to pursue law due to concerns about the fashion industry’s inaccessibility at the time — a decision that redirected her passions towards the business of fashion. Her entrepreneurial spirit was evident early on. In high school, she ran a cookies and doughnuts business during break times, earning the nickname “the businesswoman,” alongside being voted the funniest girl in her year group.
+            During her legal studies, Rumbie distinguished herself as driven and strategic. She was awarded Best Advocate and the winner of the Northants and Bucks Junior Lawyers Division Moot Competition in 2021. She also won a legal debate competition, competed in an online negotiation competition during the pandemic, and represented her host Swiss university in the international European Law Moot Court competition in Barcelona. These experiences sharpened her advocacy, research, teamwork, leadership, and analytical skills, enabling her to take on positions including Equality, Diversity and Inclusion Representative for the Methodist Church in Great Britain and De Montfort University School of Fashion and Textiles, respectively.
+            While living in Switzerland, she founded an accessory brand that deepened her interest in commercial law and the hard luxury market, ultimately inspiring her transition to fashion school. Through the venture, she gained experience in brand, client, and project management, international stakeholder relations, contract drafting and IP registration, digital marketing, consumer research, and industry events including Milan Fashion Week production assistance. Rumbie later negotiated a research brief with Lumbers Jewellers, delivering strategic insights into the next-generation consumer perceptions of hard luxury products. This collaboration inspired the concept of the 5 Ws of Fashion.</div>
+        </div>
+        <div class="craft-pill">
+          <div class="craft-letter">Samia</div>
+          <div class="craft-title">Academic &amp; Master</div>
+          <div class="craft-desc">Samia Irshad, born in Qatar and raised in Abu Dhabi, is an interdisciplinary researcher and creative strategist. Her upbringing in the Gulf, a region where accelerated urban development, luxury enterprise, and technological ambition coexist, shaped her understanding of how prestige, innovation, and cultural identity operate within global markets. This international foundation continues to inform her academic and creative work, grounding her perspective in cross-cultural fluency and a nuanced awareness of evolving luxury economies.
+            Driven by a desire to explore the creative dimensions of fashion and innovation, she completed a Master of Arts in Fashion Management and Marketing at De Montfort University, where her research critically examined how luxury fashion brands construct and communicate ethical identity, through immersive technologies to reshape symbolic value, exclusivity, and consumer trust. Her work positioned digital innovation not simply as a marketing tool, but as a structural force transforming how value and authenticity are negotiated in prestige markets.
+            Going back to her roots, she is currently undertaking a PhD that investigates the ethical and socio-technical implications of emerging technologies across high-value sectors of real estate and urban development. Her doctoral research investigates the impact of property technologies and digitally mediated infrastructures on systems of value and governance in rapidly developing markets. A clear intellectual continuity connects both degrees: a sustained focus on how digital transformation reconfigures value creation, legitimacy, and identity across prestige-driven industries.
+            Alongside her academic research, she draws on her background in PR and integrated marketing to volunteer as a creative director for societies and fashion brands, leading storytelling and strategic direction through a research-informed lens. Defined by strategic storytelling, ethical intelligence, and technological fluency, Samia aims to combine academic depth with marketing expertise to shape luxury narratives that are culturally attuned, digitally literate, and built for enduring relevance</div>
+        </div>
+        <div class="craft-pill">
+          <div class="craft-letter">Wijdane</div>
+          <div class="craft-title">Academic</div>
+          <div class="craft-desc">Wijdane grew up in a Moroccan environment where creativity and cultural expression were deeply valued, shaping her sense of identity from an early age. Encouraged by her parents' love for the arts, she developed a passion for visual culture, winning several art competitions that opened doors to an internship at a local textile institute. This early hands-on experience sparked her shift from a rigorous academic path in the hard sciences - where she had developed discipline and analytical thinking toward the arts and heritage crafts. Her multilingual background further enriched her understanding of culture, communication, and visual expressions, allowing her to approach fashion through diverse cultural and conceptual lenses. These formative experiences deeply influenced her academic focus during postgraduate studies in the UK, where she began weaving together cultural heritage, business strategy, and sustainability within the fashion sector.
+            Her academic and Industry training in textile production, marketing and the history of traditional dress has shaped her research focus on craft traditions, including Amazigh textiles - the Indigenous North African communities whose name means "free people." She explores how artisanal knowledge, materiality, identity, and historical context intersect with digital representation by designing digital platforms and technology-driven strategies that support community empowerment, alongside branding and marketing within contemporary fashion markets. Through design practice, she has gained experience in qualitative research, interview-based fieldwork, and data analysis, applying cultural knowledge to sustainable design and heritage innovation.
+            Her work also examines the relationship between business psychology, marketing, and sustainability, particularly how authenticity and cultural narratives shape consumer perception and brand engagement. She is interested in how museums and cultural institutions connect textile traditions with contemporary audiences, with an emphasis on sensory experiences, contributing to sustainable fashion discourse.</div>
+        </div>
+        <div class="craft-pill">
+          <div class="craft-letter">Namruthaa</div>
+          <div class="craft-title">Entrepreneur</div>
+          <div class="craft-desc">Namruthaa Dhanashekar is an entrepreneur and fashion professional from Bangalore, widely known as the Silicon Valley of India which is known for it’s innovative and tech forward startups. Growing up in one of India’s most diverse and vibrant city, she was surrounded by a rich blend of traditions, languages, and artistic influences that shaped her perspective on style and creativity. Her roots in the fashion and textile world run deep,she comes from a family with a history in the garment industry that began with trading and gradually evolved into a thriving textile enterprise. Over two generations, her family established Kamalam Handlooms, building a legacy in handloom textiles while also expanding into yarn manufacturing and dyeing. This environment immersed her in the craftsmanship, processes, and cultural significance behind clothing from a young age, naturally fostering her interest in fashion and clothing. Inspired by this heritage, Namruthaa pursued formal education in the field, earning a Bachelor of Science in Fashion Design along with a diploma in Fashion Styling. Wanting to combine creativity with business insight, she later completed a Master’s degree in Fashion Management and Marketing at De Montfort University equipping herself with the entrepreneurial knowledge needed to build and grow a brand. Today, Namruthaa is an entrepreneur working on launching her own fashion brand. Deeply passionate about thrifting and vintage aesthetics, she aims to incorporate these influences and circularity into her work by focusing on heirloom-inspired pieces and timeless vintage charm. Through her brand, she hopes to celebrate heritage, sustainability, and the enduring beauty of garments that carry stories across generations.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT WE DO ────────────────────────────────────────── -->
+<section class="dark-section">
+  <div class="dark-inner">
+    <p class="section-label">What We Do</p>
+    <h2>Research-led.<br><em>Event-activated.</em><br>Commercially purposeful.</h2>
+    <div class="cta-btns reveal">
+      <a href="#partner" class="btn-ghost">Partner With Us</a>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-title">Industrial Report and Insights</div>
+        <div class="service-desc">Underpinned by academic rigour and market insight, our research informs event topics, brand partnerships, and consumer messaging strategies.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-title">Event Curation</div>
+        <div class="service-desc">Immersive, education-led experiences that keep the client central while creating genuine discovery moments for every guest in the room.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-title">Webinars and Workshops</div>
+        <div class="service-desc">Leveraging the diverse specialisms within our internal team, we create a space for shared learning across specialist areas of the fashion industry.We partner exclusively with brands that authentically align with sustainable values — and we'll negotiate hard to make sure the deal works for everyone.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-title">Talent Pipeline</div>
+        <div class="service-desc">Our volunteer and mentorship structure creates a genuine pathway from fashion student to international fashion week experience.Our volunteer and mentorship programmes create practical and diverse work experience opportunities, with competitive local and international fashion opportunities.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-title">Brand Consultancy</div>
+        <div class="service-desc">We offer cost-effective brand consultancy services with experienced industry professionals, recognising that fashion businesses of all sizes deserve access to this help. We translate sustainability from buzzword to lived behaviour through events that feel exclusive, educational, and genuinely aspirational.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-title">Connect the Dots</div>
+        <div class="service-desc">We work with businesses committed to sustainable values, identifying specific business needs and designing the right conversations for the right audience — in their setting to assist them.With De Montfort University partnerships and speakers including SDG Impact researchers, we ground every conversation in evidence.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ────────────────────────────────────────────── -->
+<section class="events-section" id="events">
+  <div class="events-inner">
+    <div class="events-header reveal">
+      <div>
+        <p class="section-label">Insights,  Events &amp; Opportunities</p>
+        <h2>Where the<br><em>conversations happen.</em></h2>
+      </div>
+      <a href="#" class="about-link" style="color:var(--navy);margin-bottom:0.5rem;">View all events</a>
+    </div>
+
+    <div class="events-grid reveal">
+      <!-- Feature event -->
+      <div class="event-card">
+        <div class="event-card-img" style="background:linear-gradient(135deg,#210747 0%,var(--pink) 100%);">
+          <div class="event-badge">Featured</div>
+          <div style="position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:rgba(255,255,255,0.15);font-weight:600;line-height:1;">5 Ws</p>
+          </div>
+        </div>
+        <div class="event-card-body">
+          <p class="event-date">Spring 2025 · Leicester</p>
+          <h3 class="event-title">Conscious Retail: What Do Brands Owe Next-Gen Consumers?</h3>
+          <p class="event-desc">Featuring brand owners, DMU researchers, and fashion students in a candid discussion about transparency, supply chain ethics, and the commercial case for doing better.</p>
+          <a href="#" class="event-link">Reserve your place</a>
+        </div>
+      </div>
+
+      <!-- Secondary events -->
+      <div class="event-card">
+        <div class="event-card-img" style="background:linear-gradient(135deg,var(--pink) 0%,#8a3266 100%);">
+          <div class="event-badge">Past Event</div>
+        </div>
+        <div class="event-card-body">
+          <p class="event-date">2024 · Lumbers, Leicester</p>
+          <h3 class="event-title">The Lumbers Sustainability Showcase</h3>
+          <p class="event-desc">SDG expert Dr Mark Charlton keynoted this sell-out event at one of Leicester's finest jewellers.</p>
+          <a href="#" class="event-link">View recap</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-card-img" style="background:linear-gradient(135deg,#f0d9e6 0%,#b85e8e 100%);">
+          <div class="event-badge">Applications Open</div>
+        </div>
+        <div class="event-card-body">
+          <p class="event-date">Rolling · International</p>
+          <h3 class="event-title">Fashion Week Volunteer Cohort</h3>
+          <p class="event-desc">Represent 5Ws of Fashion at Milan, London, and Paris Fashion Weeks.</p>
+          <a href="#" class="event-link">Apply now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUOTE ─────────────────────────────────────────────── -->
+<section class="quote-section">
+  <p class="quote-text">"For the sustainable fashion model to succeed, behind-the-scenes expertise need to come to light publicly"</p>
+  <p class="quote-attr">— Rumbie Makonise, Founder, 5Ws of Fashion</p>
+</section>
+
+<!-- ── BLOG SECTION ───────────────────────────────────────── -->
+<section class="blog-section" id="blog">
+  <div class="section-inner">
+    <h2 class="section-label">Our Blog</h2>
+    <p>Explore our latest thoughts, insights, and updates on fashion and sustainability.</p>
+    <iframe 
+      src="https://rootedinopulence.wordpress.com" 
+      style="width: 100%; height: 600px; border: none;" 
+      title="Rooted in Opulence Blog">
+    </iframe>
+  </div>
+</section>
+
+<!-- ── AUDIENCE PERSONAS ──────────────────────────────────── -->
+<section class="personas-section" id="audience">
+  <p class="personas-label">Who attends · Our audience personas</p>
+  <div class="personas-track">
+    <!-- Set 1 -->
+    <div class="persona-card">
+      <div class="persona-icon">J</div>
+      <div class="persona-name">Forward-thinking James</div>
+      <div class="persona-desc">Independent fashion retailer planning succession. Data-hungry, instinct-led. Seeking credibility and expert frameworks.</div>
+      <div class="persona-archetype">The Ruler · The Sage</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">L</div>
+      <div class="persona-name">Ethical Louise</div>
+      <div class="persona-desc">Studio designer with 4 employees. Transparency-driven. Creates from love, not profit maximisation.</div>
+      <div class="persona-archetype">The Caregiver · The Creator</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">C</div>
+      <div class="persona-name">Early Adopter Chantelle</div>
+      <div class="persona-desc">Fashion styling student. Uses fashion as identity and aspiration. Dreams of Paris.</div>
+      <div class="persona-archetype">The Explorer · The Creator</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">B</div>
+      <div class="persona-name">Quiet Confident Brad</div>
+      <div class="persona-desc">Private school teacher. Quality over trends. Calm, principled, intellectually engaged.</div>
+      <div class="persona-archetype">The EveryPerson · The Sage</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">B</div>
+      <div class="persona-name">Turned-a-leaf Bea</div>
+      <div class="persona-desc">Post-pandemic shift from trend-chasing to authentic selfhood. Willing to pay for meaning.</div>
+      <div class="persona-archetype">The Innocent · The Explorer</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">A</div>
+      <div class="persona-name">Happy-to-talk Alan</div>
+      <div class="persona-desc">BD professional in fashion textiles. Relationship-driven, sociable, lifelong learner.</div>
+      <div class="persona-archetype">The EveryPerson · The Sage</div>
+    </div>
+    <!-- Duplicate for seamless loop -->
+    <div class="persona-card">
+      <div class="persona-icon">J</div>
+      <div class="persona-name">Forward-thinking James</div>
+      <div class="persona-desc">Independent fashion retailer planning succession. Data-hungry, instinct-led. Seeking credibility and expert frameworks.</div>
+      <div class="persona-archetype">The Ruler · The Sage</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">L</div>
+      <div class="persona-name">Ethical Louise</div>
+      <div class="persona-desc">Studio designer with 4 employees. Transparency-driven. Creates from love, not profit maximisation.</div>
+      <div class="persona-archetype">The Caregiver · The Creator</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">C</div>
+      <div class="persona-name">Early Adopter Chantelle</div>
+      <div class="persona-desc">Fashion styling student. Uses fashion as identity and aspiration. Dreams of Paris.</div>
+      <div class="persona-archetype">The Explorer · The Creator</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">B</div>
+      <div class="persona-name">Quiet Confident Brad</div>
+      <div class="persona-desc">Private school teacher. Quality over trends. Calm, principled, intellectually engaged.</div>
+      <div class="persona-archetype">The EveryPerson · The Sage</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">B</div>
+      <div class="persona-name">Turned-a-leaf Bea</div>
+      <div class="persona-desc">Post-pandemic shift from trend-chasing to authentic selfhood. Willing to pay for meaning.</div>
+      <div class="persona-archetype">The Innocent · The Explorer</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-icon">A</div>
+      <div class="persona-name">Happy-to-talk Alan</div>
+      <div class="persona-desc">BD professional in fashion textiles. Relationship-driven, sociable, lifelong learner.</div>
+      <div class="persona-archetype">The EveryPerson · The Sage</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA / PARTNER ──────────────────────────────────────── -->
+<section class="cta-section" id="partner">
+  <p class="cta-label">Partner with 5Ws of Fashion</p>
+  <h2 class="cta-h2 reveal">Your brand deserves an<br><em>audience that listens.</em></h2>
+  <p class="cta-desc reveal">We work only with forward-thinking brands ready to show genuine alignment with sustainable values — not just say the right words. If that sounds like you, let's talk.</p>
+<div class="page-wrapper"><div class="section small top-24px mb0"><div class="container-default _120pad mb0 w-container"><div data-w-id="6d370a8c-07b6-db13-b4f8-71f11b4abe5f" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;" class="inner-container _515px center"></div></div></div><div class="container-default w-container"><div class="section-divider-wrapper"><div class="divider _0px" style="width: 100%; height: 1px;"></div></div></div><div id="inline" class="section top-0px"><div class="container-default w-container"><div data-w-id="e5be6668-4e3d-ae9d-976b-8160fbdf91b6" class="cta-card cta-v1" style="opacity: 1;"><div id="w-node-e5be6668-4e3d-ae9d-976b-8160fbdf91b9-fbdf91b6" class="inner-container"><h2 class="display-2 mg-bottom-0 center">Want to learn more? Schedule time with our team now</h2></div><div id="w-node-e5be6668-4e3d-ae9d-976b-8160fbdf91bd-fbdf91b6" class="inner-container"><div class="html-embed w-embed w-script"><!-- Calendly inline widget begin -->
+<div class="calendly-inline-widget" data-url="https://calendly.com/embed-demo-sales/discovery-call" style="position: relative;min-width:320px;height:700px;" data-processed="true"><div class="calendly-spinner"><div class="calendly-bounce1"></div><div class="calendly-bounce2"></div><div class="calendly-bounce3"></div></div><iframe src="https://calendly.com/embed-demo-sales/discovery-call?embed_domain=www.calendly-embed.com&amp;embed_type=Inline" width="100%" height="100%" frameborder="0" title="Select a Date &amp; Time - Calendly"></iframe></div>
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async=""></script>
+<style>.calendly-overlay .calendly-popup { max-width: 1105px !important; }</style>
+<!-- Calendly inline widget end --></div></div></div></div></div></div>  
+<div class="cta-btns reveal">
+    <a href="mailto:14fashiongroup@gmail.com" class="btn-primary">Get in touch</a>
+    <a href="#events" class="btn-ghost">See our events</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">5<span>W</span>s of Fashion</div>
+        <p class="footer-tagline">A fashion research &amp; events management agency advancing conscious, uniting consumers, practitioners and academics with fashion brands. Owned by 14fashion Group Ltd.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#about">About us</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#audience">Our audience</a></li>
+          <li><a href="#partner">Partner</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Our Values</h4>
+        <ul>
+          <li><a href="#">Collaboration</a></li>
+          <li><a href="#">Responsibility</a></li>
+          <li><a href="#">Access &amp; Equity</a></li>
+          <li><a href="#">Future-thinking</a></li>
+          <li><a href="#">Transparency</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="instagram.com/5wsoffashion">Instagram</a></li>
+          <li><a href="rootedinopulence.wordpress.com/">Newsletter</a></li>
+          <li><a href="#">Volunteer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 14fashion Group Ltd. Website by <a href="#" style="color:var(--pink);cursor:none;">Integrate &amp; Partners</a>.</p>
+      <span class="footer-craft">C.R.A.F.T</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── JS ────────────────────────────────────────────────── -->
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px'; cursor.style.height = '20px';
+      ring.style.width = '54px'; ring.style.height = '54px'; ring.style.opacity = '0.3';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px'; cursor.style.height = '10px';
+      ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.6';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
